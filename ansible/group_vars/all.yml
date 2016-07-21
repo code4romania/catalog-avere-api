@@ -1,0 +1,8 @@
+---
+secure_deployment_user: "lucian"
+site_dir_name: "avere"
+
+postgres_user: "{{ site_dir_name }}"
+
+site_db_url: "psql:///{{ site_dir_name }}"
+site_repo_url:
