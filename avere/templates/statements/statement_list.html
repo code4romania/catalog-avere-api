@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Declarații</h1>
+    <ul>
+        {% for statement in statement_list %}
+            <li>
+                <a href="{% url 'statements:detail' %}">
+                {{ statement.first_name }} {{ statement.last_name }}
+                </a>
+            </li>
+        {% empty %}
+            <li>Momentan nu există declarații</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
