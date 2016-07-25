@@ -21,6 +21,7 @@ BUILTIN_APPS = (
 )
 
 LOCAL_APPS = (
+    'statements',
     'users',
 )
 
