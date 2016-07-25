@@ -1,5 +1,6 @@
 # avere
-A Django site.
+Un site pentru colectarea și gestionarea declarațiilor de avere.
+
 
 ## Development
 Development is done in a Vagrant-managed VM. This ensures compatibility with
