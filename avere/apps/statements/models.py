@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
@@ -7,10 +9,13 @@ from django.utils.encoding import python_2_unicode_compatible
 
 @python_2_unicode_compatible
 class Statement(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    position = models.CharField(max_length=255)
-    position_location = models.CharField(max_length=255)
+    first_name = models.CharField(verbose_name='prenume', max_length=255)
+    last_name = models.CharField(verbose_name='nume', max_length=255)
+    position = models.CharField(verbose_name='funcție', max_length=255)
+    position_location = models.CharField(
+        verbose_name='locul funcției',
+        max_length=255,
+    )
     created = models.DateField(auto_now_add=True)
 
     def get_absolute_url(self):
