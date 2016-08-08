@@ -7,6 +7,7 @@ from statements.models import Statement
 
 
 class StatementDetailView(DetailView):
+    context_object_name = 'statement'
     model = Statement
 
 
@@ -21,4 +22,5 @@ class StatementUpdateView(UpdateView):
 
 
 class StatementListView(ListView):
+    context_object_name = 'statement_list'
     model = Statement
