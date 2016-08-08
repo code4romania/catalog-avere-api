@@ -6,6 +6,7 @@ from django.conf.urls import url
 from statements.views import (StatementCreateView, StatementUpdateView,
                               StatementDetailView, StatementListView)
 
+app_name = 'statements'
 urlpatterns = [
     url(
         regex=r'declaratii$',
