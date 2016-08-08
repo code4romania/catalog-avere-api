@@ -11,23 +11,13 @@ class StatementDetailView(DetailView):
 
 
 class StatementCreateView(CreateView):
+    model = Statement
     form_class = StatementForm
-    fields = [
-        'first_name',
-        'last_name',
-        'position',
-        'position_location'
-    ]
 
 
 class StatementUpdateView(UpdateView):
+    model = Statement
     form_class = StatementForm
-    fields = [
-        'first_name',
-        'last_name',
-        'position',
-        'position_location'
-    ]
 
 
 class StatementListView(ListView):
