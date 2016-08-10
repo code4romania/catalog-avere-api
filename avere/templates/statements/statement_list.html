@@ -4,7 +4,7 @@
     <ul>
         {% for statement in statement_list %}
             <li>
-                <a href="{% url 'statements:detail' %}">
+                <a href="{% url 'statements:detail' statement.pk %}">
                 {{ statement.first_name }} {{ statement.last_name }}
                 </a>
             </li>
