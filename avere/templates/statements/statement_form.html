@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action="{% url 'statements:create' %}" method="post">
+        {% csrf_token %}
+        <ul class="form">
+            {{ form.as_ul }}
+        </ul>
+        <input type="submit" value="Save" />
+    </form>
+    {{ land_form.as_table }}
+{% endblock %}
