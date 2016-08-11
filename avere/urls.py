@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^users/', include('users.urls', namespace='users')),
     url(r'^declaratii/', include('statements.urls', namespace='statements')),
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='rest_framework')),
 ]
