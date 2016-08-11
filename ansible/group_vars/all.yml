@@ -5,4 +5,4 @@ site_dir_name: "avere"
 postgres_user: "{{ site_dir_name }}"
 
 site_db_url: "psql:///{{ site_dir_name }}"
-site_repo_url:
+site_repo_url: "git@github.com:code4romania/avere.git"
