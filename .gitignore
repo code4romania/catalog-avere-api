@@ -22,3 +22,6 @@ ansible/roles/ansible-*
 
 # Collected static files:
 static_all
+
+# Elm specific:
+elm-stuff
