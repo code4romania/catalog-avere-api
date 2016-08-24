@@ -37,6 +37,7 @@ sectionView model =
                             Html.map FormMsg (currentView model)
                           , previousButtonView model
                           , nextButtonView model
+                          , Html.map FormMsg (submitButtonView model)
                           ]
       Nothing -> text "Page could not be found"
 
@@ -53,6 +54,14 @@ nextButtonView : Model -> Html Msg
 nextButtonView model =
   if model.currentSection < (Array.length sections - 1) then
     button [ onClick NextSection ] [ text "Înainte"]
+  else
+    text ""
+
+
+submitButtonView : Model -> Html Form.Msg
+submitButtonView model =
+  if model.currentSection == (Array.length sections - 1) then
+    button [ onClick Form.Submit ] [ text "Trimite" ]
   else
     text ""
 
@@ -93,8 +102,6 @@ publicServantFormView model =
     , label [] [ text "Locul funcției: "]
     , Input.textInput position_location []
     , errorField position
-
-    , button [ onClick Form.Submit ] [text "Submit"]
     ]
 
 
