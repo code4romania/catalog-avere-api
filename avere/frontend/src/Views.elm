@@ -69,12 +69,10 @@ submitButtonView model =
 statementFormView : Model -> Html Form.Msg
 statementFormView model =
   let
-   date = Form.getFieldAsString "date" model.statementDateForm
+    date = Form.getFieldAsString "date" model.statementDateForm
   in
     div []
-      [ label [] [ text "Data declarației: " ]
-      , Input.textInput date []
-      , errorField date
+      [ textInputWidget "Data declarației: " date
       ]
 
 
@@ -87,22 +85,21 @@ publicServantFormView model =
     position_location = Form.getFieldAsString "position_location" model.publicServantForm
   in
     div []
-      [ label [] [ text "Prenume: " ]
-      , Input.textInput first_name []
-      , errorField first_name
-
-      , label [] [ text "Nume: "]
-      , Input.textInput last_name []
-      , errorField last_name
-
-      , label [] [ text "Funcție: "]
-      , Input.textInput position []
-      , errorField position
-
-      , label [] [ text "Locul funcției: "]
-      , Input.textInput position_location []
-      , errorField position
+      [ textInputWidget "Prenume: " first_name
+      , textInputWidget "Nume: " last_name
+      , textInputWidget "Funcție: " position
+      , textInputWidget "Locul funcției: " position_location
       ]
+
+
+-- UTILS
+textInputWidget : String -> FieldState b String -> Html Form.Msg
+textInputWidget labelText field =
+  div []
+    [ label [] [ text labelText ]
+    , Input.textInput field []
+    , errorField field
+    ]
 
 
 -- No annotation, to avoid importing VirtualDom
