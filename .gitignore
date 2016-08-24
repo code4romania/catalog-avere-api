@@ -25,3 +25,6 @@ static_all
 
 # Elm specific:
 elm-stuff
+
+# Node specific:
+node_modules
