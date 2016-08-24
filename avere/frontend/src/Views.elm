@@ -33,12 +33,12 @@ sectionView model =
     result = Array.get model.currentSection sections
   in
     case result of
-      Just currentView -> div [] [
-                            Html.map FormMsg (currentView model)
-                          , previousButtonView model
-                          , nextButtonView model
-                          , Html.map FormMsg (submitButtonView model)
-                          ]
+      Just currentView -> div []
+                            [ Html.map FormMsg (currentView model)
+                            , previousButtonView model
+                            , nextButtonView model
+                            , Html.map FormMsg (submitButtonView model)
+                            ]
       Nothing -> text "Page could not be found"
 
 
@@ -53,7 +53,7 @@ previousButtonView model =
 nextButtonView : Model -> Html Msg
 nextButtonView model =
   if model.currentSection < (Array.length sections - 1) then
-    button [ onClick NextSection ] [ text "Înainte"]
+    button [ onClick NextSection ] [ text "Înainte" ]
   else
     text ""
 
@@ -71,11 +71,11 @@ statementFormView model =
   let
    date = Form.getFieldAsString "date" model.statementDateForm
   in
-    div [] [
-      label [] [ text "Data declarației: " ]
-    , Input.textInput date []
-    , errorField date
-    ]
+    div []
+      [ label [] [ text "Data declarației: " ]
+      , Input.textInput date []
+      , errorField date
+      ]
 
 
 publicServantFormView : Model -> Html Form.Msg
@@ -86,23 +86,23 @@ publicServantFormView model =
     position = Form.getFieldAsString "position" model.publicServantForm
     position_location = Form.getFieldAsString "position_location" model.publicServantForm
   in
-    div [] [
-      label [] [ text "Prenume: " ]
-    , Input.textInput first_name []
-    , errorField first_name
+    div []
+      [ label [] [ text "Prenume: " ]
+      , Input.textInput first_name []
+      , errorField first_name
 
-    , label [] [ text "Nume: "]
-    , Input.textInput last_name []
-    , errorField last_name
+      , label [] [ text "Nume: "]
+      , Input.textInput last_name []
+      , errorField last_name
 
-    , label [] [ text "Funcție: "]
-    , Input.textInput position []
-    , errorField position
+      , label [] [ text "Funcție: "]
+      , Input.textInput position []
+      , errorField position
 
-    , label [] [ text "Locul funcției: "]
-    , Input.textInput position_location []
-    , errorField position
-    ]
+      , label [] [ text "Locul funcției: "]
+      , Input.textInput position_location []
+      , errorField position
+      ]
 
 
 -- No annotation, to avoid importing VirtualDom
