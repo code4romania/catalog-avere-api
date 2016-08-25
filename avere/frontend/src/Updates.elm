@@ -8,11 +8,11 @@ import Form exposing (Form)
 import Models exposing (..)
 
 
-type Msg =
-  NoOp |
-  FormMsg Form.Msg |
-  PreviousSection |
-  NextSection
+type Msg
+  = NoOp
+  | FormMsg Form.Msg
+  | PreviousSection
+  | NextSection
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
