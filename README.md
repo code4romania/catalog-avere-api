@@ -4,9 +4,10 @@ Un site pentru colectarea și gestionarea declarațiilor de avere.
 
 ## Contributing
 - Fork the main repo `code4romania/avere`;
+- Choose an issue you want to work on and assign it to yourself;
 - Create a feature branch named using the format
 `{issue_number}-{short_descriptive_name}`. For example `5-landing-page`;
-- Send a pull requests with your work.
+- Send a pull request with your work.
 
 
 ## Development
