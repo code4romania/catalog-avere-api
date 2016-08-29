@@ -1,18 +1,88 @@
 module Views exposing (..)
 
 import Array exposing (Array)
-import Debug exposing (log)
 
 import Html exposing (..)
 import Html.App as Html
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, href, id)
 import Html.Events exposing (onClick)
 
 import Form exposing (Form, FieldState)
 import Form.Input as Input
 
 import Models exposing (..)
+import Routing.Config exposing (..)
 import Updates exposing (..)
+
+
+menu : Model -> Html Msg
+menu model =
+  div [ class "p2 white bg-black" ]
+    [ div []
+        [ menuLink ShowHome "btnHome" "Home"
+        ]
+    ]
+
+
+menuLink : Msg -> String -> String -> Html Msg
+menuLink message viewId label =
+  a [ id viewId
+    , href "javascript://"
+    , onClick message
+    , class "red px2"
+    ]
+    [ text label
+    ]
+
+
+pageView : Model -> Html Msg
+pageView model =
+  case model.route of
+    HomeRoute ->
+      homeView model
+    WealthStatementRoute ->
+      wealthStatementView model
+    InterestsStatementRoute ->
+      interestsStatementView model
+    NotFoundRoute ->
+      notFoundView model
+
+
+homeView : Model -> Html Msg
+homeView model =
+  div [ class "p2" ]
+    [ h1 [ id "title", class "m0" ]
+        [ text "Declarații" ]
+    , p []
+        [ menuLink ShowWealthStatement "wealth" "Avere" ]
+    , p []
+        [ menuLink ShowInterestsStatement "interests" "Interese" ]
+    ]
+
+
+wealthStatementView : Model -> Html Msg
+wealthStatementView model =
+  div [ class "p2" ]
+    [ h1 [ id "title", class "m0" ]
+        [ text "Avere"
+        ]
+    ]
+
+
+interestsStatementView : Model -> Html Msg
+interestsStatementView model =
+  div [ class "p2" ]
+    [ h1 [ id "title", class "m0" ]
+        [ text "Interese"
+        ]
+    ]
+
+
+notFoundView : Model -> Html msg
+notFoundView model =
+    div []
+      [ text "Not Found"
+      ]
 
 
 sections : Array (Model -> Html Form.Msg)
@@ -24,7 +94,10 @@ sections = Array.fromList
 
 view : Model -> Html Msg
 view model =
-  sectionView model
+  div []
+    [ menu model
+    , pageView model
+    ]
 
 
 sectionView : Model -> Html Msg

@@ -2,7 +2,10 @@ module Models exposing (..)
 
 import Date exposing (Date)
 
+import Hop.Types exposing (Location)
+
 import Form exposing (Form)
+import Routing.Config exposing (Route)
 
 
 type alias PublicServant =
@@ -28,4 +31,6 @@ type alias Model =
   { statementDateForm : Form () StatementDate
   , publicServantForm : Form () PublicServant
   , currentSection : Int
+  , location : Location
+  , route : Route
   }
