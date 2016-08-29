@@ -66,6 +66,7 @@ wealthStatementView model =
     [ h1 [ id "title", class "m0" ]
         [ text "Avere"
         ]
+    , sectionView model
     ]
 
 
