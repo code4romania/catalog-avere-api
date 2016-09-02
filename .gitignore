@@ -28,3 +28,4 @@ elm-stuff
 
 # Node specific:
 node_modules
+npm-debug.log
