@@ -1,4 +1,5 @@
 module Updates exposing (Msg(FormMsg
+                           , IndexedFormMsg
                            , PreviousSection
                            , NextSection
                            , ShowHome
@@ -16,9 +17,13 @@ import Routing.Utils
 
 
 type alias FormName = String
+type alias FormId = Int
+
+
 type Msg
   = NoOp
   | FormMsg FormName Form.Msg
+  | IndexedFormMsg FormName FormId Form.Msg
   | PreviousSection
   | NextSection
   | ShowHome
