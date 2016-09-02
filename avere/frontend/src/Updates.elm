@@ -1,10 +1,13 @@
 module Updates exposing (Msg(FormMsg
+                           , IndexedFormMsg
                            , PreviousSection
                            , NextSection
                            , ShowHome
                            , ShowWealthStatement
                            , ShowInterestsStatement)
                        , update)
+
+import Dict exposing (Dict)
 
 import Form exposing (Form)
 import Hop exposing (makeUrl)
@@ -15,9 +18,14 @@ import Routing.Config
 import Routing.Utils
 
 
+type alias FormName = String
+type alias FormId = Int
+
+
 type Msg
   = NoOp
-  | FormMsg Form.Msg
+  | FormMsg FormName Form.Msg
+  | IndexedFormMsg FormName FormId Form.Msg
   | PreviousSection
   | NextSection
   | ShowHome
@@ -31,12 +39,14 @@ navigationCmd path =
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg ({publicServantForm} as model) =
+update msg model =
   case msg of
     NoOp ->
       (model, Cmd.none)
-    FormMsg formMsg ->
-      ({ model | publicServantForm = Form.update formMsg publicServantForm }, Cmd.none)
+    FormMsg formName formMsg ->
+      updateForm formName formMsg model
+    IndexedFormMsg formName formId formMsg ->
+      updateIndexedForm formName formId formMsg model
     PreviousSection ->
       ({ model | currentSection = model.currentSection - 1 }, Cmd.none)
     NextSection ->
@@ -56,3 +66,34 @@ update msg ({publicServantForm} as model) =
         path = Routing.Utils.reverse Routing.Config.InterestsStatementRoute
       in
         ( model, navigationCmd path)
+
+
+updateForm : String -> Form.Msg -> Model -> (Model, Cmd Msg)
+updateForm formName formMsg model =
+  case formName of
+    "statementDateForm" ->
+      ({ model | statementDateForm = Form.update formMsg model.statementDateForm }, Cmd.none)
+    "publicServantForm" ->
+      ({ model | publicServantForm = Form.update formMsg model.publicServantForm }, Cmd.none)
+    _ ->
+      (model, Cmd.none)
+
+
+updateIndexedForm : String -> Int -> Form.Msg -> Model -> (Model, Cmd Msg)
+updateIndexedForm formName formId formMsg model =
+  let
+    update' v =
+      case v of
+        Just form ->
+          Just (Form.update formMsg form)
+        Nothing ->
+          v
+  in
+    case formName of
+      "landForm" ->
+        let
+          landForms = Dict.update formId update' model.landForms
+        in
+          ({ model | landForms = landForms }, Cmd.none)
+      _  ->
+        (model, Cmd.none)
