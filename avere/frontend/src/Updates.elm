@@ -15,9 +15,10 @@ import Routing.Config
 import Routing.Utils
 
 
+type alias FormName = String
 type Msg
   = NoOp
-  | FormMsg Form.Msg
+  | FormMsg FormName Form.Msg
   | PreviousSection
   | NextSection
   | ShowHome
