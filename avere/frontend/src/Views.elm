@@ -4,16 +4,24 @@ import Array exposing (Array)
 import Dict exposing (Dict)
 
 import Html exposing (..)
-import Html.App as Html
-import Html.Attributes exposing (class, href, id)
+import Html.Attributes exposing (class, disabled, href, id)
 import Html.Events exposing (onClick)
 
 import Form exposing (Form, FieldState, getErrors)
-import Form.Input as Input
 
 import Models exposing (..)
 import Routing.Config exposing (..)
 import Updates exposing (..)
+
+import SectionViews exposing (sections)
+
+
+view : Model -> Html Msg
+view model =
+  div []
+    [ menu model
+    , pageView model
+    ]
 
 
 menu : Model -> Html Msg
@@ -22,17 +30,6 @@ menu model =
     [ div []
         [ menuLink ShowHome "btnHome" "Home"
         ]
-    ]
-
-
-menuLink : Msg -> String -> String -> Html Msg
-menuLink message viewId label =
-  a [ id viewId
-    , href "javascript://"
-    , onClick message
-    , class "red px2"
-    ]
-    [ text label
     ]
 
 
@@ -49,6 +46,8 @@ pageView model =
       notFoundView model
 
 
+
+
 homeView : Model -> Html Msg
 homeView model =
   div [ class "p2" ]
@@ -58,6 +57,17 @@ homeView model =
         [ menuLink ShowWealthStatement "wealth" "Avere" ]
     , p []
         [ menuLink ShowInterestsStatement "interests" "Interese" ]
+    ]
+
+
+menuLink : Msg -> String -> String -> Html Msg
+menuLink message viewId label =
+  a [ id viewId
+    , href "javascript://"
+    , onClick message
+    , class "red px2"
+    ]
+    [ text label
     ]
 
 
@@ -87,21 +97,6 @@ notFoundView model =
       ]
 
 
-sections : Array (Model -> Html Form.Msg)
-sections = Array.fromList
- [ statementFormView
- , publicServantFormView
- ]
-
-
-view : Model -> Html Msg
-view model =
-  div []
-    [ menu model
-    , pageView model
-    ]
-
-
 sectionView : Model -> Html Msg
 sectionView model =
   let
@@ -109,28 +104,11 @@ sectionView model =
   in
     case result of
       Just currentView -> div []
-                            [ Html.map FormMsg (currentView model)
+                            [ currentView model
                             , previousButtonView model
                             , nextButtonView model
-                            , Html.map FormMsg (submitButtonView model)
                             ]
       Nothing -> text "Page could not be found"
-
-formsHaveErrors : Model -> Bool
-formsHaveErrors model =
-  let
-    multiFormErrors forms =
-      Dict.map (\k form -> getErrors form) forms
-      |> Dict.values
-      |> List.concat
-
-    statementDateErrors = getErrors model.statementDateForm
-    publicServantErrors = getErrors model.publicServantForm
-    landErrors = multiFormErrors model.landForms
-  in
-    not (List.length statementDateErrors == 0 &&
-         List.length publicServantErrors == 0 &&
-         List.length landErrors == 0)
 
 
 -- BUTTONS
@@ -159,46 +137,19 @@ submitButtonView model =
     text ""
 
 
-statementFormView : Model -> Html Form.Msg
-statementFormView model =
+formsHaveErrors : Model -> Bool
+formsHaveErrors model =
   let
-    date = Form.getFieldAsString "date" model.statementDateForm
+    multiFormErrors forms =
+      Dict.map (\k form -> getErrors form) forms
+      |> Dict.values
+      |> List.concat
+
+    statementDateErrors = getErrors model.statementDateForm
+    publicServantErrors = getErrors model.publicServantForm
+    landErrors = multiFormErrors model.landForms
   in
-    div []
-      [ textInputWidget "Data declarației: " date
-      ]
+    not (List.length statementDateErrors == 0 &&
+         List.length publicServantErrors == 0 &&
+         List.length landErrors == 0)
 
-
-publicServantFormView : Model -> Html Form.Msg
-publicServantFormView model =
-  let
-    first_name = Form.getFieldAsString "first_name" model.publicServantForm
-    last_name = Form.getFieldAsString "last_name" model.publicServantForm
-    position = Form.getFieldAsString "position" model.publicServantForm
-    position_location = Form.getFieldAsString "position_location" model.publicServantForm
-  in
-    div []
-      [ textInputWidget "Prenume: " first_name
-      , textInputWidget "Nume: " last_name
-      , textInputWidget "Funcție: " position
-      , textInputWidget "Locul funcției: " position_location
-      ]
-
-
--- UTILS
-textInputWidget : String -> FieldState b String -> Html Form.Msg
-textInputWidget labelText field =
-  div []
-    [ label [] [ text labelText ]
-    , Input.textInput field []
-    , errorField field
-    ]
-
-
--- No annotation, to avoid importing VirtualDom
-errorField field =
-  case field.liveError of
-    Just error ->
-      div [ class "error" ] [ text (toString error) ]
-    Nothing ->
-      text ""
