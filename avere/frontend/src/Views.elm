@@ -1,13 +1,14 @@
 module Views exposing (..)
 
 import Array exposing (Array)
+import Dict exposing (Dict)
 
 import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (class, href, id)
 import Html.Events exposing (onClick)
 
-import Form exposing (Form, FieldState)
+import Form exposing (Form, FieldState, getErrors)
 import Form.Input as Input
 
 import Models exposing (..)
@@ -115,11 +116,29 @@ sectionView model =
                             ]
       Nothing -> text "Page could not be found"
 
+formsHaveErrors : Model -> Bool
+formsHaveErrors model =
+  let
+    multiFormErrors forms =
+      Dict.map (\k form -> getErrors form) forms
+      |> Dict.values
+      |> List.concat
 
+    statementDateErrors = getErrors model.statementDateForm
+    publicServantErrors = getErrors model.publicServantForm
+    landErrors = multiFormErrors model.landForms
+  in
+    not (List.length statementDateErrors == 0 &&
+         List.length publicServantErrors == 0 &&
+         List.length landErrors == 0)
+
+
+-- BUTTONS
 previousButtonView : Model -> Html Msg
 previousButtonView model =
   if model.currentSection > 0 then
-    button [ onClick PreviousSection ] [ text "Înapoi" ]
+    button [ disabled <| formsHaveErrors model, onClick PreviousSection ]
+      [ text "Înapoi" ]
   else
     text ""
 
