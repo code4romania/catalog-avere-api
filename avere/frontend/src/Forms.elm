@@ -1,5 +1,6 @@
 module Forms exposing (validateStatementDate
-                     , validatePublicServant)
+                     , validatePublicServant
+                     , validateLand)
 
 import Form exposing (Form)
 import Form.Validate as Validate exposing (..)
@@ -21,3 +22,15 @@ validatePublicServant =
     (get "last_name" string)
     (get "position" string)
     (get "position_location" string)
+
+
+validateLand : Validation () Land
+validateLand =
+  form7 Land
+    (get "location" (string `andThen` maxLength 255))
+    (get "category" int)
+    (get "year_acquired" int)
+    (get "area" float)
+    (get "share" int)
+    (get "method_acquired" (string `andThen` maxLength 255))
+    (get "owner" (string `andThen` maxLength 255))
