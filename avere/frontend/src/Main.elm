@@ -1,5 +1,6 @@
 module Main exposing (..)
 
+import Dict exposing (Dict)
 import Html exposing (..)
 import Html.App as Html
 import Html.Attributes exposing (..)
@@ -34,6 +35,7 @@ init : ( Routing.Config.Route, Hop.Types.Location) -> ( Model, Cmd Msg )
 init ( route, location ) =
   ( { statementDateForm = Form.initial [] validateStatementDate
     , publicServantForm = Form.initial [] validatePublicServant
+    , landForms = Dict.fromList [(0, Form.initial [] validateLand)]
     , currentSection = 0
     , route = route
     , location = location

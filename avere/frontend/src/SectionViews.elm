@@ -2,7 +2,8 @@ module SectionViews exposing (sections)
 
 import Array exposing (Array)
 import Dict exposing (Dict)
-import Html exposing (Html, section)
+import Html exposing (Html, button, section, text)
+import Html.Events exposing (onClick)
 
 import Updates exposing (Msg(..))
 import Models exposing (Model)
@@ -26,6 +27,13 @@ section1 model =
 
 section2 : Model -> Html Msg
 section2 model =
-  section []
-    <| Dict.values <| Dict.map landFormView model.landForms
+  let
+    landForms = Dict.map landFormView model.landForms |> Dict.values
+  in
+    section [] <| List.append landForms <| [addFormButtonView "landForm"]
+
+
+addFormButtonView : String -> Html Msg
+addFormButtonView form =
+  button [ onClick <| AddForm form ] [ text "Adaugă" ]
 

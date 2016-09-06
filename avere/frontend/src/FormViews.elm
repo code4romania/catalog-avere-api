@@ -37,3 +37,32 @@ publicServantFormView form =
   in
     Html.map (FormMsg "publicServantForm") html
 
+
+landFormView : Int -> Form () Land -> Html Msg
+landFormView formId form =
+  let
+    location = Form.getFieldAsString "location" form
+    category = Form.getFieldAsString "category" form
+    year_acquired = Form.getFieldAsString "year_acquired" form
+    area = Form.getFieldAsString "area" form
+    share = Form.getFieldAsString "share" form
+    method_acquired = Form.getFieldAsString "method_acquired" form
+    owner = Form.getFieldAsString "owner" form
+    categoryOptions =
+      [ ("1", "agricol")
+      , ("2", "forestier")
+      , ("3", "intravilan")
+      , ("4", "luciu apă")
+      , ("5", "alte categorii de terenuri extravilane")
+      ]
+    html = div []
+             [ textInputWidget "Adresa sau zona: " location
+             , selectInputWidget  "Categoria: " categoryOptions category
+             , textInputWidget "Anul dobândirii: " year_acquired
+             , textInputWidget "Suprafața (mp): " area
+             , textInputWidget "Cota-parte (%): " share
+             , textInputWidget "Modul de dobândire: " method_acquired
+             , textInputWidget "Titularul: " owner
+             ]
+    in
+      Html.map (IndexedFormMsg "landForm" formId) html
