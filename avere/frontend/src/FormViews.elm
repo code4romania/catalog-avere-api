@@ -5,7 +5,7 @@ import Html.App as Html
 
 import Form exposing (Form)
 
-import Updates exposing (Msg(..))
+import Updates exposing (Msg(..), FormName(..), IndexedFormName(..))
 import Models exposing (Model, StatementDate, PublicServant, Land)
 import FormWidgets exposing (textInputWidget, selectInputWidget)
 
@@ -18,7 +18,7 @@ statementFormView form =
              [ textInputWidget "Data declarației: " date
              ]
   in
-    Html.map (FormMsg "statementForm") html
+    Html.map (FormMsg StatementDateForm) html
 
 
 publicServantFormView : Form () PublicServant -> Html Msg
@@ -35,7 +35,7 @@ publicServantFormView form =
              , textInputWidget "Locul funcției: " position_location
              ]
   in
-    Html.map (FormMsg "publicServantForm") html
+    Html.map (FormMsg PublicServantForm) html
 
 
 landFormView : Int -> Form () Land -> Html Msg
@@ -65,4 +65,4 @@ landFormView formId form =
              , textInputWidget "Titularul: " owner
              ]
     in
-      Html.map (IndexedFormMsg "landForm" formId) html
+      Html.map (IndexedFormMsg LandForm formId) html
