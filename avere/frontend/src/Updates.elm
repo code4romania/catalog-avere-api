@@ -1,11 +1,6 @@
-module Updates exposing (Msg(FormMsg
-                           , IndexedFormMsg
-                           , AddForm
-                           , PreviousSection
-                           , NextSection
-                           , ShowHome
-                           , ShowWealthStatement
-                           , ShowInterestsStatement)
+module Updates exposing (Msg(..)
+                       , FormName(..)
+                       , IndexedFormName(..)
                        , update)
 
 import Dict exposing (Dict)
@@ -21,15 +16,24 @@ import Routing.Config
 import Routing.Utils
 
 
-type alias FormName = String
+type FormName
+  = StatementDateForm
+  | PublicServantForm
+
+
+type IndexedFormName
+  = LandForm
+  | BuildingForm
+
+
 type alias FormId = Int
 
 
 type Msg
   = NoOp
   | FormMsg FormName Form.Msg
-  | IndexedFormMsg FormName FormId Form.Msg
-  | AddForm FormName
+  | IndexedFormMsg IndexedFormName FormId Form.Msg
+  | AddForm IndexedFormName
   | PreviousSection
   | NextSection
   | ShowHome
@@ -53,14 +57,14 @@ update msg model =
       updateIndexedForm formName formId formMsg model
     AddForm formName ->
       case formName of
-        "landForm" ->
+        LandForm ->
            let
              newForm = Form.initial [] validateLand
              newFormKey = List.length <| Dict.values model.landForms
              landForms = Dict.insert newFormKey newForm model.landForms
            in
              ({ model | landForms = landForms }, Cmd.none )
-        _ ->
+        BuildingForm ->
           (model, Cmd.none)
 
     PreviousSection ->
@@ -84,18 +88,16 @@ update msg model =
         ( model, navigationCmd path)
 
 
-updateForm : String -> Form.Msg -> Model -> (Model, Cmd Msg)
+updateForm : FormName -> Form.Msg -> Model -> (Model, Cmd Msg)
 updateForm formName formMsg model =
   case formName of
-    "statementDateForm" ->
+    StatementDateForm ->
       ({ model | statementDateForm = Form.update formMsg model.statementDateForm }, Cmd.none)
-    "publicServantForm" ->
+    PublicServantForm ->
       ({ model | publicServantForm = Form.update formMsg model.publicServantForm }, Cmd.none)
-    _ ->
-      (model, Cmd.none)
 
 
-updateIndexedForm : String -> Int -> Form.Msg -> Model -> (Model, Cmd Msg)
+updateIndexedForm : IndexedFormName -> FormId -> Form.Msg -> Model -> (Model, Cmd Msg)
 updateIndexedForm formName formId formMsg model =
   let
     update' v =
@@ -106,10 +108,10 @@ updateIndexedForm formName formId formMsg model =
           v
   in
     case formName of
-      "landForm" ->
+      LandForm ->
         let
           landForms = Dict.update formId update' model.landForms
         in
           ({ model | landForms = landForms }, Cmd.none)
-      _  ->
+      BuildingForm ->
         (model, Cmd.none)

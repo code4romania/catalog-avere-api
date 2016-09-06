@@ -5,7 +5,7 @@ import Dict exposing (Dict)
 import Html exposing (Html, button, section, text)
 import Html.Events exposing (onClick)
 
-import Updates exposing (Msg(..))
+import Updates exposing (Msg(..), IndexedFormName(..))
 import Models exposing (Model)
 import FormViews exposing (..)
 
@@ -30,10 +30,10 @@ section2 model =
   let
     landForms = Dict.map landFormView model.landForms |> Dict.values
   in
-    section [] <| List.append landForms <| [addFormButtonView "landForm"]
+    section [] <| List.append landForms <| [addFormButtonView LandForm]
 
 
-addFormButtonView : String -> Html Msg
-addFormButtonView form =
-  button [ onClick <| AddForm form ] [ text "Adaugă" ]
+addFormButtonView : IndexedFormName -> Html Msg
+addFormButtonView formName =
+  button [ onClick <| AddForm formName ] [ text "Adaugă" ]
 
