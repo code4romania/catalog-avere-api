@@ -1,5 +1,6 @@
 module Updates exposing (Msg(FormMsg
                            , IndexedFormMsg
+                           , AddForm
                            , PreviousSection
                            , NextSection
                            , ShowHome
@@ -8,11 +9,13 @@ module Updates exposing (Msg(FormMsg
                        , update)
 
 import Dict exposing (Dict)
+import List
 
 import Form exposing (Form)
 import Hop exposing (makeUrl)
 import Navigation
 
+import Forms exposing (..)
 import Models exposing (..)
 import Routing.Config
 import Routing.Utils
@@ -26,6 +29,7 @@ type Msg
   = NoOp
   | FormMsg FormName Form.Msg
   | IndexedFormMsg FormName FormId Form.Msg
+  | AddForm FormName
   | PreviousSection
   | NextSection
   | ShowHome
@@ -47,6 +51,18 @@ update msg model =
       updateForm formName formMsg model
     IndexedFormMsg formName formId formMsg ->
       updateIndexedForm formName formId formMsg model
+    AddForm formName ->
+      case formName of
+        "landForm" ->
+           let
+             newForm = Form.initial [] validateLand
+             newFormKey = List.length <| Dict.values model.landForms
+             landForms = Dict.insert newFormKey newForm model.landForms
+           in
+             ({ model | landForms = landForms }, Cmd.none )
+        _ ->
+          (model, Cmd.none)
+
     PreviousSection ->
       ({ model | currentSection = model.currentSection - 1 }, Cmd.none)
     NextSection ->
