@@ -1,0 +1,48 @@
+---
+#XXX: Ansible can't download the key, because of the older Python version
+# Try again after upgrading the Ubuntu version
+- name: download node repo key
+  command: curl "{{ frontend_repo_key_url }}" -o /tmp/node.gpg.key
+  args:
+    creates: /tmp/node.gpg.key
+
+- name: add repo key
+  apt_key:
+    file: /tmp/node.gpg.key
+    state: present
+  sudo: yes
+
+- name: add deb repo
+  apt_repository:
+    repo: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items: frontend_repos
+  sudo: yes
+
+- name: install node packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: frontend_packages
+  sudo: yes
+
+- name: install js packages
+  npm:
+    path: "{{ frontend_project_path }}"
+    production: yes
+    state: present
+  sudo: yes
+
+- name: install elm packages
+  command: node_modules/.bin/elm package install
+  args:
+    chdir: "{{ frontend_project_path }}"
+  sudo: yes
+
+- name: build bundle
+  command: npm run build
+  args:
+    chdir: "{{ frontend_project_path }}"
+  sudo: yes
+

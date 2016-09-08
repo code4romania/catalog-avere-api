@@ -1,0 +1,33 @@
+---
+- name: install django bash completion
+  get_url:
+    url: "{{ site_django_bash_completion_url }}"
+    dest: /etc/bash_completion.d/django
+    owner: root
+    group: root
+    mode: 0644
+  sudo: yes
+
+- include: prod1.yml
+  when: site_prod_env
+
+- name: install pip requirements
+  pip:
+    requirements: "{{ site_pip_requirements }}"
+    virtualenv: "{{ site_virtualenv }}"
+  sudo: yes
+
+- name: run migrate and collectstatic commands
+  django_manage:
+    command: "{{ item }}"
+    app_path: "{{ site_build_path }}"
+    pythonpath: "{{ site_build_path }}"
+    virtualenv: "{{ site_virtualenv }}"
+  with_items:
+    - migrate
+    - collectstatic
+  sudo: yes
+  sudo_user: "{{ site_app_user }}"
+
+- include: prod2.yml
+  when: site_prod_env

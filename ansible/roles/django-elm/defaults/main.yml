@@ -1,0 +1,22 @@
+---
+site_app_user: "{{ site_dir_name }}"
+site_app_group: "{{ site_app_user }}"
+
+site_django_settings: "{{ site_dir_name }}.settings"
+site_pip_requirements: "{{ site_build_path }}/requirements/{{ ENV }}.pip"
+site_virtualenv: "{{ python_virtualenvs_dir }}/{{ site_dir_name }}"
+
+site_deployment_path: /var/www/
+site_build_path: /tmp/{{ site_dir_name }}
+
+site_django_bash_completion_url: "https://raw.githubusercontent.com/django/django/master/extras/django_bash_completion"
+site_prod_env: ENV != "development"
+
+frontend_packages:
+  - nodejs
+frontend_repos:
+  - 'deb https://deb.nodesource.com/node_4.x trusty main'
+  - 'deb-src https://deb.nodesource.com/node_4.x trusty main'
+frontend_repo_key_url: 'https://deb.nodesource.com/gpgkey/nodesource.gpg.key'
+
+frontend_project_path: "{{ site_build_path }}/{{ site_dir_name }}/frontend"

@@ -1,0 +1,19 @@
+---
+- name: make sure deployment path exists
+  file:
+    path: "{{ site_deployment_path }}"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  sudo: yes
+
+- name: sync project code to deployment path
+  command: rsync -avz --delete {{ site_build_path }}/{{ site_dir_name }} {{ site_deployment_path }}/
+  sudo: yes
+
+- name: delete the build dir
+  file:
+    path: "{{ site_build_path }}"
+    state: absent
+  sudo: yes

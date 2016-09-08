@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Lucian Ursu
+  description: Installs a Django site
+  license: BSD
+  min_ansible_version: 1.2
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+  categories:
+  - web
+dependencies: []
+

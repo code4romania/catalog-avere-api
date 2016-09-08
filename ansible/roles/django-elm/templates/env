@@ -1,0 +1,4 @@
+DEBUG=False
+SECRET_KEY={{ site_secret_key }}
+DATABASE_URL={{ site_db_url }}
+ALLOWED_HOSTS={{ site_allowed_hosts }}
