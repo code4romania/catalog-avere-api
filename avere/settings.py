@@ -63,6 +63,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     base_dir('static'),
+    base_dir('frontend/dist')
 )
 STATIC_ROOT = base_dir('static_all')
 
