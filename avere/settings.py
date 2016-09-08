@@ -7,7 +7,7 @@ base_dir = environ.Path(__file__) - 1
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
-ALLOWED_HOSTS = env('ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 SITE_ID = 1
 
 BUILTIN_APPS = (
