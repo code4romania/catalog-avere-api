@@ -1,6 +1,7 @@
 {
   "name": "avere",
   "version": "1.0.0",
+  "private:": true,
   "description": "Portal for entering wealth and interests statements",
   "main": "index.js",
   "dependencies": {
