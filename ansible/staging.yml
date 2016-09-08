@@ -7,6 +7,6 @@
     - ansible-python
     - ansible-memcached
     - ansible-postgres
-    - ansible-django-site
+    - django-elm
     - ansible-uwsgi
     - ansible-nginx
