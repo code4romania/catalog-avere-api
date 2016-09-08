@@ -29,3 +29,6 @@ elm-stuff
 # Node specific:
 node_modules
 npm-debug.log
+
+# Build dir for frontend app
+avere/frontend/dist
