@@ -37,7 +37,7 @@ validateLand =
     (get "category" int)
     (get "year_acquired" int)
     (get "area" float)
-    (get "share" int)
+    (get "share" (int `andThen` minInt 0 `andThen` maxInt 100))
     (get "method_acquired" (string `andThen` maxLength 255))
     (get "owner" (string `andThen` maxLength 255))
 
