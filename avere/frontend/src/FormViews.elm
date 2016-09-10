@@ -49,7 +49,8 @@ landFormView formId form =
     method_acquired = Form.getFieldAsString "method_acquired" form
     owner = Form.getFieldAsString "owner" form
     categoryOptions =
-      [ ("1", "agricol")
+      [ ("-", "-------")
+      , ("1", "agricol")
       , ("2", "forestier")
       , ("3", "intravilan")
       , ("4", "luciu apă")
