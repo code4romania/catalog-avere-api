@@ -115,7 +115,7 @@ sectionView model =
 previousButtonView : Model -> Html Msg
 previousButtonView model =
   if model.currentSection > 0 then
-    button [ disabled <| formsHaveErrors model, onClick PreviousSection ]
+    button [ disabled <| sectionHasErrors model, onClick PreviousSection ]
       [ text "Înapoi" ]
   else
     text ""
@@ -124,7 +124,8 @@ previousButtonView model =
 nextButtonView : Model -> Html Msg
 nextButtonView model =
   if model.currentSection < (Array.length sections - 1) then
-    button [ onClick NextSection ] [ text "Înainte" ]
+    button [ disabled <| sectionHasErrors model, onClick NextSection ]
+      [ text "Înainte" ]
   else
     text ""
 
@@ -137,19 +138,44 @@ submitButtonView model =
     text ""
 
 
-formsHaveErrors : Model -> Bool
-formsHaveErrors model =
+-- Section Errors
+sectionHasErrors : Model -> Bool
+sectionHasErrors model =
+  let
+    sectionErrors = Array.get  model.currentSection sectionsErrors
+  in
+    case sectionErrors of
+      Just sectionErrors' ->
+        sectionErrors' model
+      Nothing ->
+        False
+
+
+sectionsErrors : Array (Model -> Bool)
+sectionsErrors = Array.fromList
+  [ section1Errors
+  , section2Errors
+  ]
+
+
+section1Errors : Model -> Bool
+section1Errors model =
+  let
+    statementDateErrors = getErrors model.statementDateForm
+    publicServantErrors = getErrors model.publicServantForm
+  in
+    not (List.length statementDateErrors == 0 &&
+         List.length publicServantErrors == 0)
+
+
+section2Errors : Model -> Bool
+section2Errors model =
   let
     multiFormErrors forms =
       Dict.map (\k form -> getErrors form) forms
       |> Dict.values
       |> List.concat
 
-    statementDateErrors = getErrors model.statementDateForm
-    publicServantErrors = getErrors model.publicServantForm
     landErrors = multiFormErrors model.landForms
   in
-    not (List.length statementDateErrors == 0 &&
-         List.length publicServantErrors == 0 &&
-         List.length landErrors == 0)
-
+    not (List.length landErrors == 0)
