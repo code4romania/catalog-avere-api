@@ -1,12 +1,3 @@
 
-from .wealth import (PublicServantSerializer,
-                     LandSerializer,
-                     BuildingSerializer,
-                     VehicleSerializer,
-                     PreciousItemSerializer,
-                     EstrangedGoodSerializer,
-                     BankAccountSerializer,
-                     PlacementSerializer,
-                     DebtSerializer,
-                     PresentIncomeSerializer,
-                     WealthStatementSerializer)
+from .wealth import WealthStatementSerializer
+from .interests import InterestsStatementSerializer
