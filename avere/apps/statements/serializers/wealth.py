@@ -150,7 +150,7 @@ class PresentIncomeSerializer(serializers.Serializer):
                                               choices=INCOME_CURRENCY_CHOICES)
 
 
-class StatementSerializer(serializers.Serializer):
+class WealthStatementSerializer(serializers.Serializer):
     date = serializers.DateField(label='Data declarației',
                                  input_formats=['%d-%m-%Y'])
     public_servant = PublicServantSerializer()
