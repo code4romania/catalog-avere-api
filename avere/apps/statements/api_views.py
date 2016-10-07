@@ -1,11 +1,19 @@
 from rest_framework.generics import CreateAPIView
 
-from statements.models import Statement
-from statements.serializers import StatementSerializer
+from statements.models import InterestsStatement, WealthStatement
+from statements.serializers import (InterestsStatementSerializer,
+                                    WealthStatementSerializer)
 
 
-class StatementCreateAPIView(CreateAPIView):
-    serializer_class = StatementSerializer
+class WealthStatementCreateAPIView(CreateAPIView):
+    serializer_class = WealthStatementSerializer
 
     def perform_create(self, serializer):
-        Statement.objects.create(content=serializer.data)
+        WealthStatement.objects.create(content=serializer.data)
+
+
+class InterestsStatementCreateAPIView(CreateAPIView):
+    serializer_class = InterestsStatementSerializer
+
+    def perform_create(self, serializer):
+        InterestsStatement.objects.create(content=serializer.data)

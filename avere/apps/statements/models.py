@@ -8,11 +8,16 @@ from django.utils.encoding import python_2_unicode_compatible
 
 
 @python_2_unicode_compatible
-class Statement(models.Model):
+class WealthStatement(models.Model):
     content = JSONField()
 
-    def get_absolute_url(self):
-        return reverse('statements:detail', kwargs={'pk': self.pk})
+    def __str__(self):
+        return '<%s>' % (self.pk,)
+
+
+@python_2_unicode_compatible
+class InterestsStatement(models.Model):
+    content = JSONField()
 
     def __str__(self):
         return '<%s>' % (self.pk,)
