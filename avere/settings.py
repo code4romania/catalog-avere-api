@@ -106,3 +106,12 @@ ACCOUNT_ADAPTER = 'users.adapter.AccountAdapter'
 ACCOUNT_ALLOW_REGISTRATION = True
 ACCOUNT_SESSION_REMEMBER = True
 SOCIALACCOUNT_ADAPTER = 'users.adapter.SocialAccountAdapter'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online'
+        }
+    }
+}
