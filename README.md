@@ -21,7 +21,7 @@ production. To setup your environment:
 
 - install the Ansible roles:
 
-        ansible-galaxy install ansible/roles/external.yml
+        ansible-galaxy install -r ansible/roles/external.yml
 
 Now you can run:
 - `vagrant up` to create the VM and install everything
@@ -39,6 +39,23 @@ value of `site_repo_url` variable in `ansible/group_vars/all.yml`.
 - `vagrant suspend`: save the state of the VM and stop it.
 
 For other Vagrant commands, `vagrant help` in the terminal.
+
+### Frontend setup
+- install the Elm platform:
+
+    npm install -g elm
+
+- install the JS and Elm packages:
+
+    cd path/to/frontend/dir/
+    npm install
+    elm package install
+
+- start the dev server:
+
+    npm run dev
+
+That's it. Access the site at `http://localhost:3000`.
 
 ## Deployment
 By default, there are two deployment targets: staging and production. Start
