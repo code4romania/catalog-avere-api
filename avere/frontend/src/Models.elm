@@ -46,4 +46,5 @@ type alias Model =
   , currentSection : Int
   , location : Location
   , route : Route
+  , csrfToken : String
   }
