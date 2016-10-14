@@ -26,8 +26,8 @@ class LandSerializer(serializers.Serializer):
     year_acquired = serializers.DateField(label='Anul dobândirii',
                                           input_formats=['%Y'])
     area = serializers.IntegerField(label='Suprafața (mp)')
-    share = serializers.IntegerField(label='Cota-parte (%)', min_value=100,
-                                     max_value=0)
+    share = serializers.IntegerField(label='Cota-parte (%)', min_value=0,
+                                     max_value=100)
     method_acquired = serializers.CharField(label='Modul de dobândire',
                                             max_length=255)
     owner = serializers.CharField(label='Titularul', max_length=255)
