@@ -31,24 +31,29 @@ urlUpdate ( route, location ) model =
     ( { model | route = route, location = location }, Cmd.none )
 
 
-init : ( Routing.Config.Route, Hop.Types.Location) -> ( Model, Cmd Msg )
-init ( route, location ) =
+type alias Flags =
+  { csrfToken : String
+  }
+
+
+init : Flags -> ( Routing.Config.Route, Hop.Types.Location ) -> ( Model, Cmd Msg )
+init flags ( route, location ) =
   ( { statementDateForm = Form.initial [] validateStatementDate
     , publicServantForm = Form.initial [] validatePublicServant
     , landForms = Dict.fromList [(0, Form.initial [] validateLand)]
     , currentSection = 0
     , route = route
     , location = location
+    , csrfToken = flags.csrfToken
     }
     , Cmd.none )
 
 
-app = Navigation.program urlParser
+main : Program Flags
+main = Navigation.programWithFlags urlParser
   { init = init
   , update = update
   , view = view
   , urlUpdate = urlUpdate
   , subscriptions = \_ -> Sub.none
   }
-
-main = app
