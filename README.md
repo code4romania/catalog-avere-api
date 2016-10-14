@@ -43,17 +43,17 @@ For other Vagrant commands, `vagrant help` in the terminal.
 ### Frontend setup
 - install the Elm platform:
 
-    npm install -g elm
+        npm install -g elm
 
 - install the JS and Elm packages:
 
-    cd path/to/frontend/dir/
-    npm install
-    elm package install
+        cd path/to/frontend/dir/
+        npm install
+        elm package install
 
 - start the dev server:
 
-    npm run dev
+        npm run dev
 
 That's it. Access the site at `http://localhost:3000`.
 
