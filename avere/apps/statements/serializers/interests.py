@@ -67,8 +67,14 @@ class InterestsStatementSerializer(serializers.Serializer):
     date = serializers.DateField(label='Data declarației',
                                  input_formats=['%d-%m-%Y'])
     public_servant = PublicServantSerializer()
-    shareholder_positions = ShareholderOrNgoMemberSerializer(many=True)
-    leadership_positions = LeadershipPositionSerializer(many=True)
-    professional_memberships = ProfessionalOrgMembershipSerializer(many=True)
-    political_memberships = PoliticalMembershipSerializer(many=True)
-    contracts = ContractSerializer(many=True)
+    shareholder_positions = ShareholderOrNgoMemberSerializer(required=False,
+                                                             many=True)
+    leadership_positions = LeadershipPositionSerializer(required=False,
+                                                        many=True)
+    professional_memberships = ProfessionalOrgMembershipSerializer(
+        required=False,
+        many=True
+    )
+    political_memberships = PoliticalMembershipSerializer(required=False,
+                                                          many=True)
+    contracts = ContractSerializer(required=False, many=True)
