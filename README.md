@@ -40,6 +40,23 @@ value of `site_repo_url` variable in `ansible/group_vars/all.yml`.
 
 For other Vagrant commands, `vagrant help` in the terminal.
 
+### Frontend setup
+- install the Elm platform:
+
+    npm install -g elm
+
+- install the JS and Elm packages:
+
+    cd path/to/frontend/dir/
+    npm install
+    elm package install
+
+- start the dev server:
+
+    npm run dev
+
+That's it. Access the site at `http://localhost:3000`.
+
 ## Deployment
 By default, there are two deployment targets: staging and production. Start
 by adding your host to each target's inventory file. You find that in
