@@ -135,24 +135,24 @@ nextOrSendButtonView model =
 sectionHasErrors : Model -> Bool
 sectionHasErrors model =
   let
-    sectionErrors = Array.get  model.currentSection sectionsErrors
+    errors = Array.get model.currentSection sectionErrorCheckers
   in
-    case sectionErrors of
-      Just sectionErrors' ->
-        sectionErrors' model
+    case errors of
+      Just errorChecker ->
+        errorChecker model
       Nothing ->
         False
 
 
-sectionsErrors : Array (Model -> Bool)
-sectionsErrors = Array.fromList
-  [ section1Errors
-  , section2Errors
+sectionErrorCheckers : Array (Model -> Bool)
+sectionErrorCheckers = Array.fromList
+  [ section1HasErrors
+  , section2HasErrors
   ]
 
 
-section1Errors : Model -> Bool
-section1Errors model =
+section1HasErrors : Model -> Bool
+section1HasErrors model =
   let
     statementDateErrors = getErrors model.statementDateForm
     publicServantErrors = getErrors model.publicServantForm
@@ -161,12 +161,12 @@ section1Errors model =
          List.length publicServantErrors == 0)
 
 
-section2Errors : Model -> Bool
-section2Errors model =
+section2HasErrors : Model -> Bool
+section2HasErrors model =
   let
     multiFormErrors forms =
-      Dict.map (\k form -> getErrors form) forms
-      |> Dict.values
+      Dict.values forms
+      |> List.map (\form -> getErrors form)
       |> List.concat
 
     landErrors = multiFormErrors model.landForms
