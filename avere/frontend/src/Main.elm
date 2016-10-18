@@ -1,10 +1,6 @@
 module Main exposing (..)
 
 import Dict exposing (Dict)
-import Html exposing (..)
-import Html.App as Html
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
 import Navigation
 
 import Form exposing (Form)
