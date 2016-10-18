@@ -8,8 +8,10 @@ import List
 
 import Form exposing (Form)
 import Hop exposing (makeUrl)
+import Http
 import Navigation
 
+import Ajax
 import Forms exposing (..)
 import Models exposing (..)
 import Routing.Config
@@ -39,6 +41,9 @@ type Msg
   | ShowHome
   | ShowWealthStatement
   | ShowInterestsStatement
+  | SendFormData
+  | SaveFail Http.Error
+  | SaveSuccess String
 
 
 navigationCmd : String -> Cmd a
@@ -67,10 +72,21 @@ update msg model =
         BuildingForm ->
           (model, Cmd.none)
 
+    -- Http
+    SendFormData ->
+      (model, Ajax.saveForms model)
+    SaveFail error ->
+      (model, Cmd.none)
+    SaveSuccess response ->
+      (model, Cmd.none)
+
+    -- Sections
     PreviousSection ->
       ({ model | currentSection = model.currentSection - 1 }, Cmd.none)
     NextSection ->
       ({ model | currentSection = model.currentSection + 1 }, Cmd.none)
+
+    -- Navigation
     ShowHome ->
       let
         path = Routing.Utils.reverse Routing.Config.HomeRoute
