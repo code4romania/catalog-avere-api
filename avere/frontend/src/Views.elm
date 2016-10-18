@@ -90,7 +90,7 @@ interestsStatementView model =
     ]
 
 
-notFoundView : Model -> Html msg
+notFoundView : Model -> Html Msg
 notFoundView model =
     div []
       [ text "Not Found"
@@ -106,7 +106,7 @@ sectionView model =
       Just currentView -> div []
                             [ currentView model
                             , previousButtonView model
-                            , nextButtonView model
+                            , nextOrSendButtonView model
                             ]
       Nothing -> text "Page could not be found"
 
@@ -121,21 +121,14 @@ previousButtonView model =
     text ""
 
 
-nextButtonView : Model -> Html Msg
-nextButtonView model =
+nextOrSendButtonView : Model -> Html Msg
+nextOrSendButtonView model =
   if model.currentSection < (Array.length sections - 1) then
     button [ disabled <| sectionHasErrors model, onClick NextSection ]
       [ text "Înainte" ]
   else
-    text ""
-
-
-submitButtonView : Model -> Html Form.Msg
-submitButtonView model =
-  if model.currentSection == (Array.length sections - 1) then
-    button [ onClick Form.Submit ] [ text "Trimite" ]
-  else
-    text ""
+    button [ disabled <| sectionHasErrors model, onClick SendFormData ]
+      [ text "Trimite" ]
 
 
 -- Section Errors
