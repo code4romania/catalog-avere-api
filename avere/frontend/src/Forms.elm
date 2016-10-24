@@ -3,14 +3,11 @@ module Forms exposing (validateStatementDate
                      , validateLand)
 
 import Date exposing (Date)
-import Dict exposing (Dict)
 import Regex
 import String
 
-import Form exposing (Form)
 import Form.Error exposing (Error(InvalidDate))
 import Form.Validate as Validate exposing (..)
-import Form.Input as Input
 
 import Models exposing (..)
 
@@ -35,7 +32,7 @@ validateLand =
   form7 Land
     (get "location" (string `andThen` maxLength 255))
     (get "category" int)
-    (get "year_acquired" int)
+    (get "year_acquired" <| customValidation string validYear)
     (get "area" float)
     (get "share" (int `andThen` minInt 0 `andThen` maxInt 100))
     (get "method_acquired" (string `andThen` maxLength 255))
@@ -62,3 +59,15 @@ validDate s =
           Err Form.Error.InvalidDate
   in
     validFormat s `Result.andThen` validValue
+
+
+validYear : String -> Result (Error e) String
+validYear s =
+  let
+    validFormat s =
+      if (Regex.contains (Regex.regex "\\d{4}") s) then
+        Ok s
+      else
+        Err Form.Error.InvalidFormat
+  in
+    validFormat s
