@@ -25,7 +25,7 @@ type alias PublicServant =
 type alias Land =
   { location : String
   , category : Int
-  , year_acquired : Int
+  , year_acquired : String
   , area : Float
   , share : Int
   , method_acquired : String
@@ -36,6 +36,7 @@ type alias Land =
 type alias Statement =
   { date : StatementDate
   , public_servant : PublicServant
+  , lands : Dict Int (Land)
   }
 
 
