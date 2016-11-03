@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--name", "avere", "--memory", "1024"]
   end
 
-  config.vm.synced_folder "../avere", "/var/www/avere"
+  config.vm.synced_folder "../catalog-avere-api", "/var/www/avere"
   config.ssh.private_key_path = [
     "~/.vagrant.d/insecure_private_key",
     "~/.ssh/id_rsa"
